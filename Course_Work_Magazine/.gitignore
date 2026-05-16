@@ -1,0 +1,15 @@
+**/bin/
+**/obj/
+**/.vs/
+.vs/
+
+uploads/
+
+*.user
+*.suo
+*.cache
+*.pdb
+*.dll
+*.exe
+
+.env

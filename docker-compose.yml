@@ -1,0 +1,50 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "StrongPassword123!"
+    ports:
+      - "1433:1433"
+    restart: always
+    volumes:
+      - sql_data:/var/opt/mssql
+    networks:
+      - magazine_network
+
+  api:
+    build:
+      context: ./Course_Work_Magazine  
+      dockerfile: Dockerfile
+    container_name: magazine_api
+    depends_on:
+      - sqlserver
+    ports:
+      - "8080:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: "http://+:8080"
+      ConnectionStrings__DefaultConnection: "Server=sqlserver;Database=MagazineDb;User Id=sa;Password=StrongPassword123!;TrustServerCertificate=True"
+    restart: always
+    networks:
+      - magazine_network
+
+  ui:
+    build:
+      context: ./NEXIS-ONLINE-STORE-FRONT/my-app
+      dockerfile: Dockerfile
+    container_name: magazine_ui
+    depends_on:
+      - api
+    ports:
+      - "3000:3000"
+    restart: always
+    networks:
+      - magazine_network
+
+volumes:
+  sql_data:
+
+networks:
+  magazine_network:
