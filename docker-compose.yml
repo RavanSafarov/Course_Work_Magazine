@@ -2,9 +2,11 @@ services:
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: sqlserver
+    mem_limit: 1.5g
     environment:
       ACCEPT_EULA: "Y"
       SA_PASSWORD: "StrongPassword123!"
+      MSSQL_MEMORY_LIMIT_MB: 1024
     ports:
       - "1433:1433"
     restart: always
