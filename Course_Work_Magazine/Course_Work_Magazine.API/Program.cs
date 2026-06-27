@@ -6,7 +6,7 @@ using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
+//All Services which was used during this project
 builder.Services
     .AddDatabase(builder.Configuration)
     .AddIdentityConfiguration()
